@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-  # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
-
-  resources :questions
+  resources :questions, only: [:show, :new, :create] do
+    resources :answers, only: [:new, :create], shallow: true
+  end
 end
