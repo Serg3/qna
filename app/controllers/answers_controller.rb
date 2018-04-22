@@ -2,6 +2,7 @@ class AnswersController < ApplicationController
   before_action :load_question, only: [:create]
 
   def new
+    render 'questions/show'
     @answer = Answer.new
   end
 

@@ -12,7 +12,7 @@ RSpec.describe AnswersController, type: :controller do
     end
 
     it 'renders new view' do
-      expect(response).to render_template :new
+      expect(response).to render_template 'questions/show'
     end
   end
 
