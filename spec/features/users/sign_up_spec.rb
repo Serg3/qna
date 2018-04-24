@@ -6,6 +6,8 @@ feature 'Sign up users', %{
   I want to sign up
 } do
 
+  given(:user) { create(:user) }
+
   scenario 'sign up' do
     visit new_user_registration_path
 
