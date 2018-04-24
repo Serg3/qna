@@ -1,18 +1,14 @@
 class AnswersController < ApplicationController
   before_action :load_question, only: [:create]
 
-  def new
-    render 'questions/show'
-    @answer = Answer.new
-  end
-
   def create
     @answer = @question.answers.new(answers_params)
 
     if @answer.save
+      flash[:notice] = 'Your answer successfully created.'
       redirect_to @question
     else
-      render :new
+      render 'questions/show'
     end
   end
 
