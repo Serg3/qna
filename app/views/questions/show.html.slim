@@ -4,9 +4,15 @@ p
   body = @question.body
 
 div
-  - @question.answers.each do |answer|
-    p
-      = answer.body
+- if @answers.present?
+    - @answers.each do |answer|
+      p
+        = answer.body
+        - if current_user&.author_of?(answer)
+          = link_to 'Delete',
+            answer_path(answer),
+            method: :delete,
+            data: { confirm: 'Are you sure?' }
 
 = form_with model: [@question, @answer], local: true do |form|
 

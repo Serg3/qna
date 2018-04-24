@@ -1,3 +1,8 @@
 tr
   td = question.title
   td = link_to 'Show', question
+  - if current_user&.author_of?(question)
+    td = link_to 'Delete',
+       question_path(question),
+       method: :delete,
+       data: { confirm: 'Are you sure?' }
