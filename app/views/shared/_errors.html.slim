@@ -1,0 +1,4 @@
+- if resource&.errors.present?
+  = content_tag :div
+    - resource.errors.full_messages.each do |message|
+      li = message
