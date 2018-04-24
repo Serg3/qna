@@ -1,4 +1,5 @@
 class QuestionsController < ApplicationController
+  before_action :authenticate_user!, only: [:new, :create]
   before_action :load_question, only: [:show]
 
   def index
@@ -10,11 +11,11 @@ class QuestionsController < ApplicationController
   end
 
   def new
-    @question = Question.new
+    @question = current_user.questions.build
   end
 
   def create
-    @question = Question.new(questions_params)
+    @question = current_user.questions.build(questions_params)
 
     if @question.save
       flash[:notice] = 'Your question successfully created.'

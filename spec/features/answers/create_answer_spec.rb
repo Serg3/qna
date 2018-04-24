@@ -6,8 +6,11 @@ feature 'Create answer', %q{
   In question's page
 } do
 
+  given(:user) { create(:user) }
+
   scenario 'Create answer' do
-    question = create(:question)
+    sign_in(user)
+    question = create(:question, user: user)
 
     visit question_path(question)
 
@@ -19,8 +22,9 @@ feature 'Create answer', %q{
   end
 
   scenario 'Create answer with errors' do
-    question = create(:question)
-    
+    sign_in(user)
+    question = create(:question, user: user)
+
     visit question_path(question)
 
     fill_in 'Body', with: ''

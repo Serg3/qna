@@ -5,8 +5,12 @@ feature 'Create question', %q{
   Ask questions
 } do
 
+  given(:user) { create(:user) }
+
   scenario 'User creates question' do
+    sign_in(user)
     visit questions_path
+
     click_on 'Ask question'
     fill_in 'Title', with: 'Test question'
     fill_in 'Body', with: "question's text"
@@ -18,7 +22,9 @@ feature 'Create question', %q{
   end
 
   scenario 'User creates question with errors' do
+    sign_in(user)
     visit questions_path
+    
     click_on 'Ask question'
     fill_in 'Title', with: ''
     fill_in 'Body', with: ''
