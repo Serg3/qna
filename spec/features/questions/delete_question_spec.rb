@@ -23,8 +23,16 @@ feature 'Delete question', %q{
 
   scenario "Delete another user's question" do
     sign_in(user1)
+    create(:question, user: user2)
 
     visit questions_path
+
+    expect(page).to have_no_content 'Delete'
+  end
+
+  scenario "Unauthorized user deletes question" do
+    visit questions_path
+    create(:question, user: user1)
 
     expect(page).to have_no_content 'Delete'
   end
