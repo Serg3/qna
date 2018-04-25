@@ -24,7 +24,17 @@ feature 'Delete answer', %q{
 
   scenario "Delete another user's answer" do
     sign_in(user1)
-    question = create(:question, user: user2)
+    question = create(:question, user: user1)
+    create(:answer, user: user2, question: question)
+
+    visit question_path(question)
+
+    expect(page).to have_no_content 'Delete'
+  end
+
+  scenario "Unauthorized user deletes answer" do
+    question = create(:question, user: user1)
+    create(:answer, user: user2, question: question)
 
     visit question_path(question)
 
