@@ -4,6 +4,8 @@ RSpec.describe AnswersController, type: :controller do
   sign_in_user
   let(:question) { create(:question, user: @user) }
   let(:answer) { create(:answer, question: question, user: @user) }
+  let(:user2) { create(:user) }
+  let!(:answer2) { create(:answer, user: user2, question: question) }
 
   describe 'POST #create' do
     context 'with valid attributes' do
@@ -56,21 +58,15 @@ RSpec.describe AnswersController, type: :controller do
       end
     end
 
-
     context 'delete non self answer' do
-      before do
-        @user2 = create(:user)
-        @answer2 = create(:answer, user: @user2, question: question)
-      end
-
       it 'delete answer' do
-        expect { delete :destroy, params: { id: @answer2 } }.to_not change(Answer, :count)
+        expect { delete :destroy, params: { id: answer2 } }.to_not change(Answer, :count)
       end
 
       it 'redirect to index view' do
-        delete :destroy, params: { id: @answer2 }
+        delete :destroy, params: { id: answer2 }
 
-        expect(response).to redirect_to question_path(@answer2.question)
+        expect(response).to redirect_to question_path(answer2.question)
       end
     end
   end
