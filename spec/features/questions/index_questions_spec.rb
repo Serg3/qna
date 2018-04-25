@@ -8,10 +8,12 @@ feature 'Show all questions', %q{
   given(:user) { create(:user) }
 
   scenario 'Index questions' do
-    question = create(:question, user: user)
+    questions = create_list(:question, 2, user: user)
     visit questions_path
 
-    expect(page).to have_content question.title
+    questions.each do |question|
+      expect(page).to have_content question.title
+    end
   end
 
 end
