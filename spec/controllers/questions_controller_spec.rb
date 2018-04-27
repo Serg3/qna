@@ -89,6 +89,14 @@ RSpec.describe QuestionsController, type: :controller do
 
         expect(response).to redirect_to questions_path
       end
+
+      it "check question's author with logged user" do
+        question
+
+        expect { delete :destroy,
+                 params: { id: question }
+               }.to change(@user.questions, :count).by(-1)
+      end
     end
 
 

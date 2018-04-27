@@ -21,6 +21,13 @@ RSpec.describe AnswersController, type: :controller do
                                 answer: attributes_for(:answer) }
         expect(response).to redirect_to question_path(question)
       end
+
+      it "check answer's author with logged user" do
+        expect { post :create,
+                 params: { question_id: question,
+                           answer: attributes_for(:answer) }
+               }.to change(@user.answers, :count).by(1)
+      end
     end
 
     context 'with invalid attributes' do
@@ -51,6 +58,12 @@ RSpec.describe AnswersController, type: :controller do
         delete :destroy, params: { id: answer }
 
         expect(response).to redirect_to question_path(answer.question)
+      end
+
+      it "check answer's author with logged user" do
+        answer
+        
+        expect { delete :destroy, params: { id: answer } }.to change(@user.answers, :count).by(-1)
       end
     end
 
