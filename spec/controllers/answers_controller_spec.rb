@@ -59,12 +59,6 @@ RSpec.describe AnswersController, type: :controller do
 
         expect(response).to redirect_to question_path(answer.question)
       end
-
-      it "check answer's author with logged user" do
-        answer
-        
-        expect { delete :destroy, params: { id: answer } }.to change(@user.answers, :count).by(-1)
-      end
     end
 
     context 'delete non self answer' do
