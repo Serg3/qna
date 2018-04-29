@@ -8,7 +8,7 @@ feature 'Create answer', %q{
 
   given(:user) { create(:user) }
 
-  scenario 'Create answer' do
+  scenario 'Create answer', js: true do
     sign_in(user)
     question = create(:question, user: user)
 
@@ -17,11 +17,14 @@ feature 'Create answer', %q{
     fill_in 'Body', with: 'Answer for question'
     click_on 'Create Answer'
 
+    expect(current_path).to eq question_path(question)
     expect(page).to have_content 'Your answer successfully created.'
-    expect(page).to have_content 'Answer for question'
+    within '.answers' do
+      expect(page).to have_content 'Answer for question'
+    end
   end
 
-  scenario 'Create answer with errors' do
+  scenario 'Create answer with errors', js: true do
     sign_in(user)
     question = create(:question, user: user)
 
@@ -30,7 +33,11 @@ feature 'Create answer', %q{
     fill_in 'Body', with: ''
     click_on 'Create Answer'
 
+    expect(current_path).to eq question_path(question)
     expect(page).to have_content "Body can't be blank"
+    within '.answers' do
+      expect(page).to have_no_content 'Answer for question'
+    end
   end
 
 end

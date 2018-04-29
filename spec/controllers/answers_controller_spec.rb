@@ -12,20 +12,26 @@ RSpec.describe AnswersController, type: :controller do
       it 'saves the new answer' do
         expect { post :create,
                  params: { question_id: question,
-                           answer: attributes_for(:answer) }
+                           answer: attributes_for(:answer),
+                           format: :js
+                         }
                }.to change(question.answers, :count).by(1)
       end
 
-      it 'redirects to question view' do
+      it 'render create template' do
         post :create, params: { question_id: question,
-                                answer: attributes_for(:answer) }
-        expect(response).to redirect_to question_path(question)
+                                answer: attributes_for(:answer),
+                                format: :js
+                              }
+        expect(response).to render_template :create
       end
 
       it "check answer's author with logged user" do
         expect { post :create,
                  params: { question_id: question,
-                           answer: attributes_for(:answer) }
+                           answer: attributes_for(:answer),
+                           format: :js
+                         }
                }.to change(@user.answers, :count).by(1)
       end
     end
@@ -34,14 +40,18 @@ RSpec.describe AnswersController, type: :controller do
       it 'does not save the answer' do
         expect { post :create,
                  params: { question_id: question,
-                           answer: attributes_for(:invalid_question) }
+                           answer: attributes_for(:invalid_question),
+                           format: :js
+                         }
                }.to_not change(Answer, :count)
       end
 
-      it 're-renders new view' do
+      it 'render create template' do
         post :create, params: { question_id: question,
-                                answer: attributes_for(:invalid_question) }
-        expect(response).to render_template 'questions/show'
+                                answer: attributes_for(:invalid_question),
+                                format: :js
+                              }
+        expect(response).to render_template :create
       end
     end
   end
