@@ -1,19 +1,18 @@
+#flash
+#answer_errors
+
 p
   title = @question.title
 p
   body = @question.body
 
-div
-  - @answers&.each do |answer|
-    p
-      = answer.body
-      - if current_user&.author_of?(answer)
-        = link_to 'Delete',
-          answer_path(answer),
-          method: :delete,
-          data: { confirm: 'Are you sure?' }
+.answers
+  - if @question.answers.present?
+    = render @question.answers
+  - else
+    p There are no answers yet
 
-= form_with model: [@question, @answer], local: true do |form|
+= form_with model: [@question, @answer], remote: true do |form|
 
   = render 'shared/errors', resource: @answer
 
