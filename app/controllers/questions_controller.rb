@@ -1,6 +1,6 @@
 class QuestionsController < ApplicationController
-  before_action :authenticate_user!, only: [:new, :create, :destroy]
-  before_action :load_question, only: [:show, :destroy]
+  before_action :authenticate_user!, only: [:new, :create, :update, :destroy]
+  before_action :load_question, only: [:show, :update, :destroy]
 
   def index
     @questions = Question.all
@@ -16,13 +16,23 @@ class QuestionsController < ApplicationController
   end
 
   def create
-    @question = current_user.questions.build(questions_params)
+    @question = current_user.questions.build(question_params)
 
     if @question.save
       flash[:notice] = 'Your question successfully created.'
       redirect_to @question
     else
       render :new
+    end
+  end
+
+  def update
+    if current_user.author_of?(@question)
+      @question.update(question_params)
+      flash[:notice] = 'Your question successfully updated.'
+    else
+      flash[:alert] = "You can not edit another user's question!"
+      redirect_to @question
     end
   end
 
@@ -43,7 +53,7 @@ class QuestionsController < ApplicationController
     @question = Question.find(params[:id])
   end
 
-  def questions_params
+  def question_params
     params.require(:question).permit(:title, :body)
   end
 end
