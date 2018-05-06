@@ -1,0 +1,7 @@
+$('#answer_errors').html('');
+$('#flash').html('');
+
+$('.answer_<%= @answer.id %>').remove();
+$('#flash').html("<%= j render 'shared/flash' %>");
+
+<% flash.clear %>

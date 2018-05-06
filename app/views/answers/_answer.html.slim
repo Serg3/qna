@@ -14,4 +14,4 @@ div class="answer_#{answer.id}"
       p = link_to 'Delete',
         answer_path(answer),
         method: :delete,
-        data: { confirm: 'Are you sure?' }
+        data: { confirm: 'Are you sure?', remote: true }
