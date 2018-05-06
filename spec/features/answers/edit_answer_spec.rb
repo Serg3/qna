@@ -19,7 +19,7 @@ feature 'Edit answer', %q{
       visit question_path(question)
 
       click_on 'Edit'
-      
+
       within '.answers' do
         fill_in 'Answer', with: 'edited answer'
         click_on 'Save'
@@ -35,8 +35,9 @@ feature 'Edit answer', %q{
       create(:answer, user: user2, question: question)
 
       visit question_path(question)
-
-      expect(page).to have_no_content 'Edit'
+      within '.answers' do
+        expect(page).to have_no_content 'Edit'
+      end
     end
   end
 

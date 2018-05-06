@@ -76,6 +76,33 @@ RSpec.describe QuestionsController, type: :controller do
     end
   end
 
+  describe 'PUT #update' do
+    it 'assigns the requested question to @question' do
+      put :update, params: { id: question, question: attributes_for(:question), format: :js }
+
+      expect(assigns(:question)).to eq question
+    end
+
+    it 'changes question attributes' do
+      put :update, params: { id: question,
+                             question: { title: 'edited question title',
+                                         body: 'edited question body'
+                                         },
+                             format: :js
+                           }
+      question.reload
+
+      expect(question.title).to eq 'edited question title'
+      expect(question.body).to eq 'edited question body'
+    end
+
+    it 'render update template' do
+      put :update, params: { id: question, question: attributes_for(:question), format: :js }
+
+      expect(response).to render_template :update
+    end
+  end
+
   describe 'DELETE #destroy' do
     context 'delete self question' do
       it 'delete question' do
@@ -90,7 +117,6 @@ RSpec.describe QuestionsController, type: :controller do
         expect(response).to redirect_to questions_path
       end
     end
-
 
     context 'delete non self question' do
       before do
