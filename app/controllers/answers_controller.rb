@@ -3,10 +3,23 @@ class AnswersController < ApplicationController
   before_action :load_question, only: [:create]
 
   def create
-    @answer = @question.answers.new(answers_params)
+    @answer = @question.answers.new(answer_params)
     @answer.user = current_user
 
     flash[:notice] = 'Your answer successfully created.' if @answer.save
+  end
+
+  def update
+    @answer = Answer.find(params[:id])
+
+    if current_user.author_of?(@answer)
+      @answer.update(answer_params)
+      flash[:notice] = 'Your answer successfully updated.'
+    else
+      flash[:alert] = "You can not edit another user's answer!"
+      redirect_to @answer.question
+    end
+
   end
 
   def destroy
@@ -28,7 +41,7 @@ class AnswersController < ApplicationController
     @question = Question.find(params[:question_id])
   end
 
-  def answers_params
+  def answer_params
     params.require(:answer).permit(:body)
   end
 end
