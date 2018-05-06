@@ -1,10 +1,10 @@
 #flash
-#answer_errors
 
-p
-  title = @question.title
-p
-  body = @question.body
+#question_errors
+
+= render 'question_show', question: @question
+
+#answer_errors
 
 .answers
   - if @question.answers.present?
