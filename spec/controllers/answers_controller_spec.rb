@@ -58,20 +58,32 @@ RSpec.describe AnswersController, type: :controller do
 
   describe 'PUT #update' do
     it 'assigns the requested answer to @answer' do
-      put :update, params: { id: answer, question_id: question, answer: attributes_for(:answer), format: :js }
+      put :update, params: { id: answer,
+                             question_id: question,
+                             answer: attributes_for(:answer),
+                             format: :js
+                           }
 
       expect(assigns(:answer)).to eq answer
     end
 
     it 'changes answer attributes' do
-      put :update, params: { id: answer, question_id: question, answer: { body: 'edited answer' }, format: :js }
+      put :update, params: { id: answer,
+                             question_id: question,
+                             answer: { body: 'edited answer' },
+                             format: :js
+                           }
       answer.reload
 
       expect(answer.body).to eq 'edited answer'
     end
 
     it 'render update template' do
-      put :update, params: { id: answer, question_id: question, answer: attributes_for(:answer), format: :js }
+      put :update, params: { id: answer,
+                             question_id: question,
+                             answer: attributes_for(:answer),
+                             format: :js
+                           }
 
       expect(response).to render_template :update
     end
@@ -82,13 +94,16 @@ RSpec.describe AnswersController, type: :controller do
       it 'delete answer' do
         answer
 
-        expect { delete :destroy, params: { id: answer } }.to change(Answer, :count).by(-1)
+        expect { delete :destroy,
+                 params: { id: answer },
+                 format: :js
+               }.to change(Answer, :count).by(-1)
       end
 
-      it 'redirect to index view' do
-        delete :destroy, params: { id: answer }
+      it 'render destroy template' do
+        delete :destroy, params: { id: answer }, format: :js
 
-        expect(response).to redirect_to question_path(answer.question)
+        expect(response).to render_template :destroy
       end
     end
 

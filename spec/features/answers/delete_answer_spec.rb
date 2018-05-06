@@ -9,7 +9,7 @@ feature 'Delete answer', %q{
   given(:user1) { create(:user) }
   given(:user2) { create(:user) }
 
-  scenario "Delete user's answer" do
+  scenario "Delete user's answer", js: true do
     sign_in(user1)
     question = create(:question, user: user1)
     answer = create(:answer, user: user1, question: question)
