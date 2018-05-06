@@ -1,4 +1,4 @@
-require 'rails_helper'
+require_relative '../features_helper'
 
 feature 'Create question', %q{
   I want to be able to
@@ -24,7 +24,7 @@ feature 'Create question', %q{
   scenario 'User creates question with errors' do
     sign_in(user)
     visit questions_path
-    
+
     click_on 'Ask question'
     fill_in 'Title', with: ''
     fill_in 'Body', with: ''
