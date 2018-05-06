@@ -7,6 +7,6 @@ $('#flash').html('');
   $('.answers').append("<%= j render @answer %>");
   $('#flash').append("<%= j render 'shared/flash' %>");
 
-  $('#answer_body').val('');
+  $('.new_answer_form #answer_body').val('');
   <% flash.clear %>
 <% end %>

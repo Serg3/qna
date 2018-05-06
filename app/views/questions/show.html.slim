@@ -12,7 +12,7 @@ p
   - else
     p There are no answers yet
 
-= form_with model: [@question, @answer], remote: true do |form|
+= form_with model: [@question, @answer], class: 'new_answer_form', remote: true do |form|
 
   = render 'shared/errors', resource: @answer
 
