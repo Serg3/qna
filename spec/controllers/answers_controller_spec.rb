@@ -89,6 +89,30 @@ RSpec.describe AnswersController, type: :controller do
     end
   end
 
+  describe 'PUT #set_best' do
+    let(:question2) { create(:question, user: user2) }
+    let(:answer3) { create(:answer, question: question2, user: user2) }
+
+    it 'assigns the requested answer to @answer' do
+      put :set_best, params: { id: answer }, format: :js
+
+      expect(assigns(:answer)).to eq answer
+    end
+
+    it 'an author set the best answer' do
+      put :set_best, params: { id: answer }, format: :js
+      answer.reload
+
+      expect(answer).to be_best
+    end
+
+    it 'a non author of question tries to set the best answer' do
+      put :set_best, params: { id: answer3 }, format: :js
+
+      expect(flash[:alert]).to eq "You can't set the best answer for another user's question."
+    end
+  end
+
   describe 'DELETE #destroy' do
     context 'delete self answer' do
       it 'delete answer' do
