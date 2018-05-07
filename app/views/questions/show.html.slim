@@ -7,8 +7,8 @@
 #answer_errors
 
 .answers
-  - if @question.answers.present?
-    = render @question.answers
+  - if @answers.present?
+    = render @answers
   - else
     p There are no answers yet
 
