@@ -7,7 +7,7 @@ class QuestionsController < ApplicationController
   end
 
   def show
-    @answers = @question.answers
+    @answers = @question.answers.by_best
     @answer = Answer.new
   end
 
