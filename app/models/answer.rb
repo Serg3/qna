@@ -9,7 +9,9 @@ class Answer < ApplicationRecord
   def set_best
     current_best = question.answers.find_by(best: true)
 
-    current_best.update!(best: false) if current_best
-    update!(best: true)
+    transaction do
+      current_best.update!(best: false) if current_best
+      update!(best: true)
+    end
   end
 end
