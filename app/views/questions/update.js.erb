@@ -5,7 +5,7 @@ $('#flash').html('');
   $('#question_errors').html('<%= j render "shared/errors", resource: @question %>');
 <% else %>
   $('.question_<%= @question.id %>')
-    .replaceWith('<%= j render "question_show", question: @question %>');
+    .replaceWith('<%= j render @question %>');
   $('#flash').html("<%= j render 'shared/flash' %>");
 
   <% flash.clear %>

@@ -1,8 +1,20 @@
-tr
-  td = question.title
-  td = link_to 'Show', question
+div class="question_#{question.id}"
+  p
+    h2 = question.title
+  p
+    h3 = question.body
+
   - if current_user&.author_of?(question)
-    td = link_to 'Delete',
-       question_path(question),
-       method: :delete,
-       data: { confirm: 'Are you sure?' }
+    p = link_to 'Edit question', '', class: 'edit-question-link', data: { question_id: question.id }
+    p
+      = form_with model: question,
+                  id: "edit-question-#{question.id}",
+                  class: 'edit_question_form',
+                  remote: true do |f|
+        = f.label :title
+        = f.text_field :title
+
+        = f.label :body
+        = f.text_area :body
+
+        = f.submit 'Save'
