@@ -1,21 +1,32 @@
 div class="answer_#{answer.id}"
+  div -------------------------------------------------------------------------------
   p
     - if current_user&.author_of?(answer.question) && !answer.best?
       = answer.body
-      = link_to 'The best', set_best_answer_path(answer), method: :put, remote: true
+      div = link_to 'The best', set_best_answer_path(answer), method: :put, remote: true
     - else
       b = answer.body
 
     - if current_user&.author_of?(answer)
       p = link_to 'Edit', '', class: 'edit-answer-link', data: { answer_id: answer.id }
-      p = form_with model: answer,
-                    id: "edit-answer-#{answer.id}",
-                    class: 'edit_answer_form',
-                    remote: true do |f|
+      = form_with model: answer,
+                  id: "edit-answer-#{answer.id}",
+                  class: 'edit_answer_form',
+                  remote: true do |f|
           = f.label :body, 'Answer'
           = f.text_area :body
           = f.submit 'Save'
-      p = link_to 'Delete',
-        answer_path(answer),
-        method: :delete,
-        data: { confirm: 'Are you sure?', remote: true }
+      = link_to 'Delete',
+                  answer_path(answer),
+                  method: :delete,
+                  data: { confirm: 'Are you sure?', remote: true }
+
+      ul
+        - answer.attachments.each do |a|
+          li id="attachment_#{a.id}"
+            => link_to a.file.identifier, a.file.url
+            - if current_user&.author_of?(answer)
+              = link_to 'Remove file',
+                        attachment_path(a),
+                        method: :delete,
+                        data: { confirm: 'are you sure?', remote: true }

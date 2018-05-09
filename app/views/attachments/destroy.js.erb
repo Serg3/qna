@@ -1,0 +1,8 @@
+$('#flash').html('');
+
+<% if @attachment.destroyed? %>
+  $('#attachment_<%= @attachment.id %>').remove();
+  $('#flash').html("<%= j render 'shared/flash' %>");
+<% end %>
+
+<% flash.clear %>

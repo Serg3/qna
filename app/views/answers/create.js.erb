@@ -1,5 +1,6 @@
 $('#answer_errors').html('');
 $('#flash').html('');
+$(".nested-fields").remove();
 
 <% if @answer.errors.present? %>
   $('#answer_errors').append("<%= j render 'shared/errors', resource: @answer %>");

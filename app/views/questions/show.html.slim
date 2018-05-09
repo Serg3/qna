@@ -12,11 +12,16 @@
   - else
     p There are no answers yet
 
-= form_with model: [@question, @answer], class: 'new_answer_form', remote: true do |form|
+div -------------------------------------------------------------------------------
+
+= form_with model: [@question, @answer], class: 'new_answer_form', remote: true do |f|
 
   = render 'shared/errors', resource: @answer
-
-  = form.label :body
-  = form.text_field :body
-
-  = form.submit
+  p
+    = f.label :body
+    = f.text_field :body
+  p
+    = f.fields_for :attachments do |a|
+      = link_to_add_association 'Add file', f, :attachments, partial: 'shared/attachment_fields'
+  p
+    = f.submit

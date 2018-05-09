@@ -3,6 +3,16 @@ div class="question_#{question.id}"
     h2 = question.title
   p
     h3 = question.body
+  p Attachments:
+  ul
+    - question.attachments.each do |a|
+      li id="attachment_#{a.id}"
+        => link_to a.file.identifier, a.file.url
+        - if current_user&.author_of?(question)
+          = link_to 'Remove file',
+                    attachment_path(a),
+                    method: :delete,
+                    data: { confirm: 'are you sure?', remote: true }
 
   - if current_user&.author_of?(question)
     p = link_to 'Edit question', '', class: 'edit-question-link', data: { question_id: question.id }
