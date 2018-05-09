@@ -33,7 +33,7 @@ class AnswersController < ApplicationController
   def set_best
     if current_user.author_of?(@answer.question)
       @answer.set_best
-      
+
       flash[:notice] = "Answer set as best successfully."
     else
       flash[:alert] = "You can't set the best answer for another user's question."
@@ -51,6 +51,6 @@ class AnswersController < ApplicationController
   end
 
   def answer_params
-    params.require(:answer).permit(:body)
+    params.require(:answer).permit(:body, attachments_attributes: [:file, :id, :_destroy])
   end
 end
