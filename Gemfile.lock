@@ -63,9 +63,14 @@ GEM
     capybara-webkit (1.15.0)
       capybara (>= 2.3, < 4.0)
       json
+    carrierwave (1.2.2)
+      activemodel (>= 4.0.0)
+      activesupport (>= 4.0.0)
+      mime-types (>= 1.16)
     chromedriver-helper (1.2.0)
       archive-zip (~> 0.10)
       nokogiri (~> 1.8)
+    cocoon (1.2.11)
     coffee-rails (4.2.2)
       coffee-script (>= 2.2.0)
       railties (>= 4.0.0)
@@ -120,6 +125,9 @@ GEM
     marcel (0.3.2)
       mimemagic (~> 0.3.2)
     method_source (0.9.0)
+    mime-types (3.1)
+      mime-types-data (~> 3.2015)
+    mime-types-data (3.2016.0521)
     mimemagic (0.3.2)
     mini_mime (1.0.0)
     mini_portile2 (2.3.0)
@@ -253,7 +261,9 @@ DEPENDENCIES
   byebug
   capybara (>= 2.15, < 4.0)
   capybara-webkit
+  carrierwave
   chromedriver-helper
+  cocoon
   coffee-rails (~> 4.2)
   database_cleaner
   devise
