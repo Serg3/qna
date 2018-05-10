@@ -49,7 +49,8 @@ feature 'Add files to answer', %q{
 
       within '.answers' do
         click_link 'Remove file'
-
+        page.driver.browser.switch_to.alert.accept
+        
         expect(page).to_not have_link 'spec_helper.rb'
       end
     end

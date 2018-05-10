@@ -33,7 +33,7 @@ feature 'Add files to question', %q{
   end
 
   describe 'User deletes file', js: true do
-    scenario 'while creating answer' do
+    scenario 'while creating question' do
       click_link 'Delete file'
 
       click_on 'Create'
@@ -41,10 +41,11 @@ feature 'Add files to question', %q{
       expect(page).to_not have_link 'spec_helper.rb'
     end
 
-    scenario 'after creating answer', js: true do
+    scenario 'after creating question', js: true do
       click_on 'Create'
 
       click_link 'Remove file'
+      page.driver.browser.switch_to.alert.accept
 
       expect(page).to_not have_link 'spec_helper.rb'
     end

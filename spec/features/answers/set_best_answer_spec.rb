@@ -37,4 +37,5 @@ feature 'Choose a best answers', %q{
 
     expect(page).to_not have_link "The best"
   end
+  
 end

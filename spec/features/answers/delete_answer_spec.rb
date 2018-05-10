@@ -17,7 +17,8 @@ feature 'Delete answer', %q{
     visit question_path(question)
 
     click_on 'Delete'
-
+    page.driver.browser.switch_to.alert.accept
+    
     expect(page).to have_content 'Your answer successfully deleted.'
     expect(page).to have_no_content answer.body
   end
