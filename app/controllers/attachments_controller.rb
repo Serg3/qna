@@ -7,6 +7,7 @@ class AttachmentsController < ApplicationController
       flash[:notice] = 'Your attachment successfully deleted.'
     else
       flash[:alert] = "You can't delete another user's attachment!"
+      redirect_to @attachment.attachable
     end
   end
 
