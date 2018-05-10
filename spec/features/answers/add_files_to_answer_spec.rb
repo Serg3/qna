@@ -35,4 +35,24 @@ feature 'Add files to answer', %q{
     end
   end
 
+  describe 'User deletes file', js: true do
+    scenario 'while creating answer' do
+      click_link 'Delete file'
+
+      click_on 'Create Answer'
+
+      expect(page).to_not have_link 'spec_helper.rb'
+    end
+
+    scenario 'after creating answer', js: true do
+      click_on 'Create Answer'
+
+      within '.answers' do
+        click_link 'Remove file'
+
+        expect(page).to_not have_link 'spec_helper.rb'
+      end
+    end
+  end
+
 end
