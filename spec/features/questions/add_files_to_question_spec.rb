@@ -18,7 +18,14 @@ feature 'Add files to question', %q{
     fill_in 'Body', with: 'Text of question'
 
     click_link 'Add file'
-    attach_file 'File', "#{Rails.root}/spec/spec_helper.rb"
+    within all('.nested-fields')[0] do
+      attach_file 'File', "#{Rails.root}/spec/spec_helper.rb"
+    end
+
+    click_link 'Add file'
+    within all('.nested-fields')[1] do
+      attach_file 'File', "#{Rails.root}/spec/rails_helper.rb"
+    end
 
     click_on 'Create'
 

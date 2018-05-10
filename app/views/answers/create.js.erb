@@ -1,6 +1,5 @@
 $('#answer_errors').html('');
 $('#flash').html('');
-$(".nested-fields").remove();
 
 <% if @answer.errors.present? %>
   $('#answer_errors').append("<%= j render 'shared/errors', resource: @answer %>");
@@ -9,5 +8,6 @@ $(".nested-fields").remove();
   $('#flash').append("<%= j render 'shared/flash' %>");
 
   $('.new_answer_form #answer_body').val('');
+  $('.nested-fields').remove();
   <% flash.clear %>
 <% end %>
