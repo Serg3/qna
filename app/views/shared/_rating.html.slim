@@ -1,0 +1,22 @@
+div class="rating_#{resource.class}_#{resource.id}"
+  p
+    | Rating:
+    span
+      => " #{resource.rating}"
+    - if current_user&.author_of?(resource)
+    - else
+      => link_to 'like',
+                polymorphic_path(resource, action: :like),
+                method: :post,
+                remote: true,
+                class: "rate like #{'hidden' if resource.voted?(current_user)}"
+      => link_to 'dislike',
+                polymorphic_path(resource, action: :dislike),
+                method: :post,
+                remote: true,
+                class: "rate dislike #{'hidden' if resource.voted?(current_user)}"
+      => link_to 'cancel',
+                polymorphic_path(resource, action: :cancel),
+                method: :post,
+                remote: true,
+                class: "rate cancel #{'hidden' unless resource.voted?(current_user)}"

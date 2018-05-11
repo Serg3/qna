@@ -3,6 +3,8 @@ div class="question_#{question.id}"
     h2 = question.title
   p
     h3 = question.body
+  p
+    = render 'shared/rating', resource: question
   p Attachments:
   ul
     - question.attachments.each do |a|
