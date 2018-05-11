@@ -2,9 +2,9 @@ require 'rails_helper'
 
 RSpec.describe AnswersController, type: :controller do
   sign_in_user
-  let(:question) { create(:question, user: @user) }
+  let!(:question) { create(:question, user: @user) }
   let(:answer) { create(:answer, question: question, user: @user) }
-  let(:user2) { create(:user) }
+  let!(:user2) { create(:user) }
   let!(:answer2) { create(:answer, question: question, user: user2) }
 
   describe 'POST #create' do
@@ -142,5 +142,10 @@ RSpec.describe AnswersController, type: :controller do
         expect(response).to redirect_to question_path(answer2.question)
       end
     end
+  end
+
+  it_behaves_like 'rated' do
+    let(:resource) { create(:answer, user: @user, question: question) }
+    let(:resource2) { create(:answer, user: user2, question: question) }
   end
 end

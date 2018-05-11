@@ -1,9 +1,18 @@
 Rails.application.routes.draw do
   devise_for :users
+
   root to: 'questions#index'
 
-  resources :questions, except: [:edit] do
-    resources :answers, only: [:create, :update, :destroy], shallow: true do
+  concern :ratingable do
+    member do
+      post :like
+      post :dislike
+      post :cancel
+    end
+  end
+
+  resources :questions, except: :edit, concerns: :ratingable do
+    resources :answers, only: [:create, :update, :destroy], concerns: :ratingable, shallow: true do
       member do
         put :set_best
       end

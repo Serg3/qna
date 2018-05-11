@@ -143,4 +143,9 @@ RSpec.describe QuestionsController, type: :controller do
       end
     end
   end
+
+  it_behaves_like 'rated' do
+    let(:resource) { create(:question, user: @user) }
+    let(:resource2) { create(:question, user: user2) }
+  end
 end
