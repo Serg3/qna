@@ -41,11 +41,17 @@ shared_examples_for 'ratingable' do
   describe '#rating' do
     it 'returns rating of resource' do
       user2 = create(:user)
+      user3 = create(:user)
+      user4 = create(:user)
+      user5 = create(:user)
 
       resource.like(user)
       resource.like(user2)
+      resource.dislike(user3)
+      resource.like(user4)
+      resource.dislike(user5)
 
-      expect(resource.rating).to eq (2)
+      expect(resource.rating).to eq (1)
     end
   end
 
