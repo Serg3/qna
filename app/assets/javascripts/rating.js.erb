@@ -4,12 +4,12 @@ ready = function() {
   $('.rate').bind('ajax:success', function(e) {
     [data, status, xhr] = e.detail;
     parentClass = ".rating_" + data.klass + "_" + data.id;
-    toggleActions(parentClass, data.rating, data.action);
+    toggleActions(parentClass, data.rating);
   });
 
-  function toggleActions(parentClass, rating, action) {
+  function toggleActions(parentClass, rating) {
     $(parentClass + ' span').html(' ' + rating);
-    if (action === 'cancel') {
+    if ($(parentClass).find('.cancel').hasClass('hidden')) {
       $(parentClass).find('.like').addClass('hidden');
       $(parentClass).find('.dislike').addClass('hidden');
       $(parentClass).find('.cancel').removeClass('hidden');
@@ -21,5 +21,5 @@ ready = function() {
   };
 };
 
-$(document).ready(ready);
+// $(document).ready(ready);
 $(document).on('turbolinks:load', ready);

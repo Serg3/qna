@@ -24,7 +24,7 @@ feature 'Rate for answer', %q{
         expect(page).to_not have_link 'like'
         expect(page).to_not have_link 'dislike'
         expect(page).to have_link 'cancel'
-        expect(page).to have_content '+1'
+        expect(page).to have_content '1'
       end
     end
 
