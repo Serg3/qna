@@ -6,7 +6,7 @@ table
       th Questions
       th Show
       th Destroy
-  tbody
+  tbody, class='questions-list'
     - @questions.each do |question|
       tr
         td = question.title

@@ -5,7 +5,7 @@ div class="question_#{question.id}"
     h3 = question.body
   p
     = render 'shared/rating', resource: question
-  p Attachments:
+  h4 Attachments:
   ul
     - question.attachments.each do |a|
       li id="attachment_#{a.id}"
@@ -30,3 +30,10 @@ div class="question_#{question.id}"
         = f.text_area :body
 
         = f.submit 'Save'
+
+  h4 Comments:
+  div class="comment_#{question.class}_#{question.id}"
+    p
+      = render question.comments
+    p
+      = render 'comments/form', resource: question

@@ -32,3 +32,9 @@ div class="answer_#{answer.id}"
                       attachment_path(a),
                       method: :delete,
                       data: { confirm: 'are you sure?', remote: true }
+
+    div class="comment_#{answer.class}_#{answer.id}"
+        p
+          = render answer.comments
+        p
+          = render 'comments/form', resource: answer
