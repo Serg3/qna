@@ -1,0 +1,28 @@
+div class="answer_#{@answer.id} best_#{@answer.best}"
+  p
+    b = @answer.body
+  p
+  div class="rating_Answer_#{@answer.id}"
+    p
+      | rating
+      span 0
+    - if gon.is_user_signed_in
+      a.vote.cancel.hidden data-method='post' data-remote='true' href="/answers/#{@answer.id}/vote_reset" rel='nofollow' Cancel
+      a.vote.like data-method='post' data-remote='true' href="/answers/#{@answer.id}/vote_up" rel='nofollow' like
+      a.vote.dislike data-method='post' data-remote='true' href="/answers/#{@answer.id}/vote_down" rel='nofollow' dislike
+
+  - if @attachments.length > 0
+    #attachments
+      ul
+        - for a in @attachments
+          li id="attachment_#{a.id}"
+            a href=a.url #{a.name}
+  - if gon.user_id == @question_user_id
+    a data-method='patch' data-remote='true' href="/answers/#{@answer.id}/select_best" rel='nofollow' Choose best
+  div class="comment_Answer_#{@answer.id}"
+    .errors
+    form.comment_form accept-charset='UTF-8' action="/answers/#{@answer.id}/comments" data-remote='true' method='post'
+      input name='utf8' type='hidden' value="✓"
+      label for='comment_body'  Comment
+      input#comment_body name='comment[body]' type='text'
+      input data-disable-with=('Create Comment') name='commit' type='submit' value=('Create Comment')

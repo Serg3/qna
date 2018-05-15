@@ -1,6 +1,6 @@
-var ready;
+var rateAnswer;
 
-ready = function() {
+rateAnswer = function() {
   $('.rate').bind('ajax:success', function(e) {
     [data, status, xhr] = e.detail;
     parentClass = ".rating_" + data.klass + "_" + data.id;
@@ -22,4 +22,4 @@ ready = function() {
 };
 
 // $(document).ready(ready);
-$(document).on('turbolinks:load', ready);
+$(document).on('turbolinks:load', rateAnswer);
