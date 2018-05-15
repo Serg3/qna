@@ -2,6 +2,8 @@ doctype html
 html
   head
     title Qna
+    = Gon::Base.render_data
+    
     = csrf_meta_tags
     = csp_meta_tag
 
