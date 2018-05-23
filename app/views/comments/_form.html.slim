@@ -1,8 +1,8 @@
 .errors
 
-= form_with model: [resource, resource.comments.build], class: 'comment_form' do |form|
+= form_with model: [resource, resource.comments.new], class: 'comment_form', remote: true do |form|
 
-  = form.label :body
+  = form.label :body, 'Comment body'
   = form.text_field :body
 
   = form.submit

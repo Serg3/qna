@@ -5,7 +5,7 @@ div class="answer_#{answer.id}"
       = answer.body
       div = link_to 'The best', set_best_answer_path(answer), method: :put, remote: true
     - else
-      b = answer.body
+      = answer.body
   p
     = render 'shared/rating', resource: answer
 
@@ -33,7 +33,7 @@ div class="answer_#{answer.id}"
                       method: :delete,
                       data: { confirm: 'are you sure?', remote: true }
 
-    div class="comment_#{answer.class}_#{answer.id}"
+    div class="comment_answer_#{answer.id}"
         p
           = render answer.comments
         p

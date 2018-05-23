@@ -32,7 +32,7 @@ div class="question_#{question.id}"
         = f.submit 'Save'
 
   h4 Comments:
-  div class="comment_#{question.class}_#{question.id}"
+  div class="comment_question_#{question.id}"
     p
       = render question.comments
     p
