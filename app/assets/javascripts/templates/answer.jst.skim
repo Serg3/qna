@@ -1,28 +1,34 @@
-div class="answer_#{@answer.id} best_#{@answer.best}"
+div class="answer_#{@answer.id}"
+  div -------------------------------------------------------------------------------
   p
-    b = @answer.body
+    - if gon.is_user_signed_in && gon.user_id == @answer.user_id && !@answer.best?
+      = @answer.body
+      a data-method='put' data-remote='true' href="/answers/#{@answer.id}/set_best" The best
+    - else
+      = @answer.body
   p
-  div class="rating_Answer_#{@answer.id}"
-    p
-      | rating
-      span 0
-    - if gon.is_user_signed_in
-      a.vote.cancel.hidden data-method='post' data-remote='true' href="/answers/#{@answer.id}/vote_reset" rel='nofollow' Cancel
-      a.vote.like data-method='post' data-remote='true' href="/answers/#{@answer.id}/vote_up" rel='nofollow' like
-      a.vote.dislike data-method='post' data-remote='true' href="/answers/#{@answer.id}/vote_down" rel='nofollow' dislike
+    div class="rating_#{@answer.class}_#{@answer.id}"
+      p
+        | Rating:
+        span
+          = " #{@answer.rating}"
+        - if gon.is_user_signed_in
+          - if !(gon.user_id == @answer.user_id)
+            a.rate.like data-method='post' data-remote='true' href="/answers/#{@answer.id}/like" rel='nofollow'  like
+            a.rate.dislike data-method='post' data-remote='true' href="/answers/#{@answer.id}/dislike" rel='nofollow'  dislike
+            a.rate.cancel.hidden data-method='post' data-remote='true' href="/answers/#{@answer.id}/cancel" rel='nofollow'  cancel
 
-  - if @attachments.length > 0
-    #attachments
-      ul
-        - for a in @attachments
-          li id="attachment_#{a.id}"
-            a href=a.url #{a.name}
-  - if gon.user_id == @question_user_id
-    a data-method='patch' data-remote='true' href="/answers/#{@answer.id}/select_best" rel='nofollow' Choose best
+
+  ul
+    - for a in @attachments
+      li id="attachment_#{a.id}"
+        a href = a.url
+        - if gon.is_user_signed_in && gon.user_id == @answer.user_id
+          a data-confirm="Are you sure?" rel="nofollow" data-method='delete' data-remote='true' href="/#{a.id}/destroy" Remove file
+
   div class="comment_Answer_#{@answer.id}"
-    .errors
     form.comment_form accept-charset='UTF-8' action="/answers/#{@answer.id}/comments" data-remote='true' method='post'
       input name='utf8' type='hidden' value="✓"
-      label for='comment_body'  Comment
+      label for='comment_body' Body
       input#comment_body name='comment[body]' type='text'
       input data-disable-with=('Create Comment') name='commit' type='submit' value=('Create Comment')

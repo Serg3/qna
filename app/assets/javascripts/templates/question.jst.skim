@@ -1,5 +1,7 @@
 tr
   td = @question.title
-  td <a href="/questions/#{@question.id}">Show</a>
+  td
+    a href="/questions/#{@question.id}" Show
   - if gon.is_user_signed_in && gon.user_id == @question.user_id
-    td <a data-confirm="Are you sure?" rel="nofollow" data-method="delete" href="/questions/#{@question.id}">Delete</a>
+    td
+      a data-confirm="Are you sure?" rel="nofollow" data-method="delete" href="/questions/#{@question.id}" Delete

@@ -1,12 +1,12 @@
-class CommentsController < ActionController
+class CommentsController < ActionController::Base
   before_action :find_resource, only: :create
   after_action :publish_comment, only: :create
 
   def create
     @comment = @resource.comments.build(comment_params)
-
     @comment.user = current_user
-    @comment.save
+
+    flash[:notice] = 'Your comment successfully created.' if @comment.save
   end
 
   private
@@ -18,7 +18,7 @@ class CommentsController < ActionController
   def publish_comment
     return if @comment.errors.any?
 
-    ActionCable.server.broadcast("comments_for_question_#{resource_question_id}", comment: @comment )
+    ActionCable.server.broadcast("comments_for_question_#{resource_question_id}", comment: @comment.as_json)
   end
 
   def resource_question_id
@@ -26,7 +26,7 @@ class CommentsController < ActionController
   end
 
   def find_resource
-    klass = [Question, Answer].detect{|c| params["#{c.name.underscore}_id"]}
+    klass = [Question, Answer].detect{ |c| params["#{c.name.underscore}_id"] }
 
     @resource = klass.find(params["#{klass.name.underscore}_id"])
   end
