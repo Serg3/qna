@@ -10,6 +10,9 @@ Rails.application.routes.draw do
       post :cancel
     end
   end
+  concern :commentable do
+    resources :comments, only: :create, shallow: true
+  end
 
   resources :questions, except: :edit, concerns: [:ratingable, :commentable] do
     resources :answers,
