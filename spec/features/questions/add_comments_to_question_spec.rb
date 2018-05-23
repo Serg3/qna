@@ -14,7 +14,7 @@ feature 'Leave comments for questions', %q{
 
     visit question_path(question)
 
-    fill_in 'Comment', with: 'comment text'
+    fill_in 'Comment body', with: 'comment text'
     click_on 'Create Comment'
 
     expect(page).to have_content 'comment text'
@@ -25,7 +25,7 @@ feature 'Leave comments for questions', %q{
 
     visit question_path(question)
 
-    fill_in 'Comment', with: ''
+    fill_in 'Comment body', with: ''
     click_on 'Create Comment'
 
     expect(page).to have_content "Body can't be blank"
@@ -44,7 +44,7 @@ feature 'Leave comments for questions', %q{
       end
 
       Capybara.using_session('user') do
-        fill_in 'Comment', with: 'comment text'
+        fill_in 'Comment body', with: 'comment text'
         click_on 'Create Comment'
       end
 
@@ -53,4 +53,5 @@ feature 'Leave comments for questions', %q{
       end
     end
   end
+  
 end
