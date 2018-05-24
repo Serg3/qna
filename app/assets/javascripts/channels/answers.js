@@ -4,9 +4,7 @@ var ready = function () {
   App.cable.subscriptions.create({ channel: 'AnswersChannel', id: questionId }, {
     connected: function() {
       console.log('Connected answers!');
-      this.perform('follow', {
-        id: questionId
-      });
+      this.perform('follow');
     },
 
     received: function(data) {
