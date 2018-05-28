@@ -23,7 +23,7 @@ div ----------------------------------------------------------------------------
     = f.label :body
     = f.text_field :body
   p
-    = f.fields_for :attachments do |a|
+    = f.fields_for :attachments, @answer.attachments.build do |a|
       = link_to_add_association 'Add file', f, :attachments, partial: 'shared/attachment_fields'
   p
     = f.submit
