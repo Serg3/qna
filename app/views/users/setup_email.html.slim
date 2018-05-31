@@ -1,0 +1,8 @@
+= render 'shared/errors', resource: current_user
+
+h1 Setup your real email-adress:
+= form_with model: current_user, url: confirm_email_user_path(current_user), local: true do |f|
+  => f.label :email
+  = f.text_field :email, value: current_user.email
+
+  p = f.submit 'Confirm email'
