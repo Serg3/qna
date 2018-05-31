@@ -22,6 +22,10 @@ RSpec.configure do |config|
   Capybara.default_max_wait_time = 5
   Capybara.server = :puma
 
+  ActionDispatch::IntegrationTest
+  Capybara.server_port = 3000
+  Capybara.app_host = 'http://localhost:3000'
+
   config.include AcceptanceHelper, type: :feature
 
   config.use_transactional_fixtures = false
