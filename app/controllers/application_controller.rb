@@ -7,6 +7,10 @@ class ApplicationController < ActionController::Base
   before_action :gon_user
   before_action :check_real_email
 
+  rescue_from CanCan::AccessDenied do |exception|
+    redirect_to root_url, alert: exception.message
+  end
+
   private
 
   def gon_user
