@@ -109,7 +109,7 @@ RSpec.describe AnswersController, type: :controller do
     it 'a non author of question tries to set the best answer' do
       put :set_best, params: { id: answer3 }, format: :js
 
-      expect(flash[:alert]).to eq "You can't set the best answer for another user's question."
+      expect(flash[:alert]).to eq "You are not authorized to access this page."
     end
   end
 
@@ -134,12 +134,6 @@ RSpec.describe AnswersController, type: :controller do
     context 'delete non self answer' do
       it 'delete answer' do
         expect { delete :destroy, params: { id: answer2 } }.to_not change(Answer, :count)
-      end
-
-      it 'redirect to index view' do
-        delete :destroy, params: { id: answer2 }
-
-        expect(response).to redirect_to question_path(answer2.question)
       end
     end
   end

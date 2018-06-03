@@ -27,12 +27,6 @@ RSpec.describe AttachmentsController, type: :controller do
         expect { delete :destroy, params: { id: file2 }, format: :js }
                .to_not change(Attachment, :count)
       end
-
-      it "redirect to attachable's view" do
-        delete :destroy, params: { id: file2 }
-
-        expect(response).to redirect_to question_path(question2)
-      end
     end
   end
 end
