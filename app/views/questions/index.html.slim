@@ -1,4 +1,5 @@
-p= link_to 'Ask question', new_question_path
+- if can?(:create, Question)
+  p = link_to 'Ask question', new_question_path
 
 table
   thead
@@ -11,7 +12,7 @@ table
       tr
         td = question.title
         td = link_to 'Show', question
-        - if current_user&.author_of?(question)
+        - if can?(:destroy, question)
           td = link_to 'Delete',
              question_path(question),
              method: :delete,

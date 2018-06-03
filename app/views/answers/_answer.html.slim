@@ -1,7 +1,7 @@
 div class="answer_#{answer.id}"
   div -------------------------------------------------------------------------------
   p
-    - if current_user&.author_of?(answer.question) && !answer.best?
+    - if can?(:set_best, answer) && !answer.best?
       = answer.body
       div = link_to 'The best', set_best_answer_path(answer), method: :put, remote: true
     - else
@@ -9,7 +9,7 @@ div class="answer_#{answer.id}"
   p
     = render 'shared/rating', resource: answer
 
-    - if current_user&.author_of?(answer)
+    - if can?(:update, answer)
       p = link_to 'Edit', '', class: 'edit-answer-link', data: { answer_id: answer.id }
       = form_with model: answer,
                   id: "edit-answer-#{answer.id}",
@@ -18,16 +18,17 @@ div class="answer_#{answer.id}"
           = f.label :body, 'Answer'
           = f.text_area :body
           = f.submit 'Save'
-      = link_to 'Delete',
-                  answer_path(answer),
-                  method: :delete,
-                  data: { confirm: 'Are you sure?', remote: true }
+      - if can?(:destroy, answer)
+        = link_to 'Delete',
+                    answer_path(answer),
+                    method: :delete,
+                    data: { confirm: 'Are you sure?', remote: true }
 
     ul
       - answer.attachments.each do |a|
         li id="attachment_#{a.id}"
           => link_to a.file.identifier, a.file.url
-          - if current_user&.author_of?(answer)
+          - if can?(:destroy, a)
             = link_to 'Remove file',
                       attachment_path(a),
                       method: :delete,

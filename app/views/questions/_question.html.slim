@@ -10,13 +10,13 @@ div class="question_#{question.id}"
     - question.attachments.each do |a|
       li id="attachment_#{a.id}"
         => link_to a.file.identifier, a.file.url
-        - if current_user&.author_of?(question)
+        - if can?(:destroy, a)
           = link_to 'Remove file',
                     attachment_path(a),
                     method: :delete,
                     data: { confirm: 'are you sure?', remote: true }
 
-  - if current_user&.author_of?(question)
+  - if can?(:update, question)
     p = link_to 'Edit question', '', class: 'edit-question-link', data: { question_id: question.id }
     p
       = form_with model: question,

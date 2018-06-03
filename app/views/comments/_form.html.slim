@@ -1,8 +1,9 @@
-.errors
+- if can?(:create, Comment)
+  .errors
 
-= form_with model: [resource, resource.comments.new], class: 'comment_form', remote: true do |form|
+  = form_with model: [resource, resource.comments.new], class: 'comment_form', remote: true do |form|
 
-  = form.label :body, 'Comment body'
-  = form.text_field :body
+    = form.label :body, 'Comment body'
+    = form.text_field :body
 
-  = form.submit
+    = form.submit

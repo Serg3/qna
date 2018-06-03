@@ -1,4 +1,5 @@
 .nested-fields
   = f.label :file
   = f.file_field :file
-  = link_to_remove_association "Delete file", f
+  - if can?(:destroy, Attachment)
+    = link_to_remove_association "Delete file", f
