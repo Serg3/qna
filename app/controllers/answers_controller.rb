@@ -6,6 +6,8 @@ class AnswersController < ApplicationController
   before_action :load_answer, only: [:update, :destroy, :set_best]
   after_action :publish_answer, only: [:create]
 
+  authorize_resource
+
   def create
     @answer = @question.answers.new(answer_params)
     @answer.user = current_user
@@ -24,13 +26,7 @@ class AnswersController < ApplicationController
   end
 
   def destroy
-    if current_user.author_of?(@answer)
-      @answer.destroy
-      flash[:notice] = 'Your answer successfully deleted.'
-    else
-      flash[:alert] = "You can not delete another user's answer!"
-      redirect_to @answer.question
-    end
+    flash[:notice] = 'Your answer successfully deleted.' if @answer.destroy
   end
 
   def set_best

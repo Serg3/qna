@@ -1,14 +1,10 @@
 class AttachmentsController < ApplicationController
   before_action :find_attachment
 
+  authorize_resource
+
   def destroy
-    if current_user.author_of?(@attachment.attachable)
-      @attachment.destroy
-      flash[:notice] = 'Your attachment successfully deleted.'
-    else
-      flash[:alert] = "You can't delete another user's attachment!"
-      redirect_to @attachment.attachable
-    end
+    @attachment.destroy
   end
 
   private
