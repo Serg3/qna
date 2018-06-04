@@ -109,7 +109,7 @@ RSpec.describe AnswersController, type: :controller do
     it 'a non author of question tries to set the best answer' do
       put :set_best, params: { id: answer3 }, format: :js
 
-      expect(flash[:alert]).to eq "You are not authorized to access this page."
+      expect(response.status).to eq 403
     end
   end
 

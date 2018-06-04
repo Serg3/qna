@@ -16,10 +16,12 @@ RSpec.describe Ability, type: :model do
   describe 'for user' do
     let(:user) { create :user }
     let(:other_user) { create :user }
+
     let(:question) { create :question, user: user }
     let(:other_question) { create :question, user: other_user }
     let(:question_attachment) { create :attachment, attachable: question }
     let(:other_question_attachment) { create :attachment, attachable: other_question }
+
     let(:answer) { create :answer, user: user, question: question }
     let(:other_answer) { create :answer, user: other_user, question: other_question }
     let(:answer_attachment) { create :attachment, attachable: answer }
@@ -34,7 +36,7 @@ RSpec.describe Ability, type: :model do
       it { should be_able_to :update, question, user: user }
       it { should_not be_able_to :update, other_question, user: user }
       it { should_not be_able_to [:like, :dislike, :cancel], question, user: user }
-      it { should be_able_to [:like, :dislike, :cancel], other_question, user: user }
+      it { should be_able_to [:like, :dislike], other_question, user: user }
       it { should be_able_to :destroy, question_attachment, user: user }
       it { should_not be_able_to :destroy, other_question_attachment, user: user }
     end
@@ -46,7 +48,7 @@ RSpec.describe Ability, type: :model do
       it { should be_able_to :update, answer, user: user }
       it { should_not be_able_to :update, other_answer, user: user }
       it { should_not be_able_to [:like, :dislike, :cancel], answer, user: user }
-      it { should be_able_to [:like, :dislike, :cancel], other_answer, user: user }
+      it { should be_able_to [:like, :dislike], other_answer, user: user }
       it { should be_able_to :destroy, answer_attachment, user: user }
       it { should_not be_able_to :destroy, other_answer_attachment, user: user }
       it { should be_able_to :destroy, answer_attachment, user: user }

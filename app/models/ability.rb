@@ -23,9 +23,14 @@ class Ability
     can :update, [Question, Answer], user_id: user.id
     can [:read, :me], [User]
 
-    alias_action :like, :dislike, :cancel, to: :rate
+    alias_action :like, :dislike, to: :rate
+
     can :rate, [Question, Answer] do |resource|
       !user.author_of?(resource)
+    end
+
+    can :cancel, [Question, Answer] do |resource|
+      resource.voted?(user)
     end
 
     can :destroy, Attachment do |attachment|
