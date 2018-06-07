@@ -3,6 +3,12 @@ require 'rails_helper'
 RSpec.describe Ability, type: :model do
   subject(:ability) { Ability.new(user) }
 
+  describe 'for admin' do
+    let(:user) { create :admin }
+
+    it { should be_able_to :manage, :all }
+  end
+
   describe 'for guest' do
     let(:user) { nil }
 
@@ -31,28 +37,37 @@ RSpec.describe Ability, type: :model do
 
     context 'Question' do
       it { should be_able_to :create, Question }
+
       it { should be_able_to :destroy, question, user: user }
       it { should_not be_able_to :destroy, other_question, user: user }
+
       it { should be_able_to :update, question, user: user }
       it { should_not be_able_to :update, other_question, user: user }
+
       it { should_not be_able_to [:like, :dislike, :cancel], question, user: user }
       it { should be_able_to [:like, :dislike], other_question, user: user }
+
       it { should be_able_to :destroy, question_attachment, user: user }
       it { should_not be_able_to :destroy, other_question_attachment, user: user }
     end
 
     context 'Answer' do
       it { should be_able_to :create, Answer }
+
       it { should be_able_to :destroy, answer, user: user }
       it { should_not be_able_to :destroy, other_answer, user: user }
+
       it { should be_able_to :update, answer, user: user }
       it { should_not be_able_to :update, other_answer, user: user }
+
       it { should_not be_able_to [:like, :dislike, :cancel], answer, user: user }
       it { should be_able_to [:like, :dislike], other_answer, user: user }
+
       it { should be_able_to :destroy, answer_attachment, user: user }
       it { should_not be_able_to :destroy, other_answer_attachment, user: user }
       it { should be_able_to :destroy, answer_attachment, user: user }
       it { should_not be_able_to :destroy, other_answer_attachment, user: user }
+
       it { should_not be_able_to :set_best, other_answer, user: user }
       it { should be_able_to :set_best, answer, user: user }
     end

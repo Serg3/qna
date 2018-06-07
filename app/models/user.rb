@@ -31,10 +31,14 @@ class User < ApplicationRecord
   end
 
   def author_of?(resource)
-    resource.user_id == self.id
+    resource.user_id == id
   end
 
   def email_temp?
     email =~ /@email.temp/
+  end
+
+  def admin?
+    is_a?(Admin)
   end
 end

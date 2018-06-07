@@ -101,4 +101,17 @@ RSpec.describe User, type: :model do
       expect(temp_user.email_temp?).to be_truthy
     end
   end
+
+  describe '#admin?' do
+    let(:user) { create(:user) }
+    let(:admin) { create(:admin) }
+
+    it 'returns true for Admin' do
+      expect(admin.admin?).to be_truthy
+    end
+
+    it 'returns false for User' do
+      expect(user.admin?).to be_falsey
+    end
+  end
 end
