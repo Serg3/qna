@@ -2,7 +2,8 @@ require 'rails_helper'
 
 describe 'Profile API' do
 
-  describe 'GET /me' do
+  describe 'GET #me' do
+
     context 'unauthorized' do
       it 'returns 401 status if there is no access_token' do
         get '/api/v1/profiles/me', params: { format: :json }
@@ -41,9 +42,11 @@ describe 'Profile API' do
         end
       end
     end
+
   end
 
   describe 'GET #index' do
+
     context 'unauthorized' do
       it 'returns 401 status if there is no access_token' do
         get '/api/v1/profiles/', params: { format: :json }
@@ -79,6 +82,7 @@ describe 'Profile API' do
         expect(response.body).to_not include_json(me.to_json)
       end
     end
+
   end
 
 end
