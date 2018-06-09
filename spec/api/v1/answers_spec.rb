@@ -6,11 +6,10 @@ describe 'answers API' do
 
   let!(:questions) { create_list(:question, 3, user: user) }
   let(:question) { questions.first }
-  
+
   let!(:answers) { create_list :answer, 3, question: question, user: user }
 
   describe 'GET #index' do
-
     context 'unauthorized' do
       it 'returns 401 status if there is no access_token' do
         get "/api/v1/questions/#{question.id}/answers", params: { format: :json }
@@ -19,9 +18,8 @@ describe 'answers API' do
       end
 
       it 'returns 401 status if access_token is invalid' do
-        get "/api/v1/questions/#{question.id}/answers", params: { format: :json,
-                                                                  access_token: '1234'
-                                                                }
+        get "/api/v1/questions/#{question.id}/answers",
+            params: { format: :json, access_token: '1234' }
 
         expect(response.status).to eq 401
       end
@@ -30,9 +28,10 @@ describe 'answers API' do
     context 'authorized' do
       let(:access_token) { create(:access_token, resource_owner_id: user.id) }
 
-      before { get '/api/v1/questions/', params: { format: :json,
-                                                  access_token: access_token.token
-                                                  } }
+      before do
+        get '/api/v1/questions/',
+        params: { format: :json, access_token: access_token.token }
+      end
 
       it 'returns 200 status' do
         expect(response).to be_successful
@@ -50,11 +49,9 @@ describe 'answers API' do
         end
       end
     end
-
   end
 
   describe 'GET #show' do
-
     let(:answer) { answers.first }
 
     context 'unauthorized' do
@@ -82,9 +79,10 @@ describe 'answers API' do
 
       let(:access_token) { create(:access_token, resource_owner_id: user.id) }
 
-      before { get "/api/v1/answers/#{answer.id}", params: { format: :json,
-                                                            access_token: access_token.token
-                                                            } }
+      before do
+        get "/api/v1/answers/#{answer.id}",
+        params: { format: :json, access_token: access_token.token }
+      end
 
       it 'returns 200 status' do
         expect(response).to be_successful
@@ -116,11 +114,9 @@ describe 'answers API' do
         end
       end
     end
-
   end
 
   describe 'POST #create' do
-
     context 'unauthorized' do
       it 'returns 401 status if there is no access_token' do
         post "/api/v1/questions/#{question.id}/answers", params: { format: :json }
@@ -129,9 +125,8 @@ describe 'answers API' do
       end
 
       it 'returns 401 status if access_token is invalid' do
-        post "/api/v1/questions/#{question.id}/answers", params: { format: :json,
-                                                                   access_token: '1234'
-                                                                 }
+        post "/api/v1/questions/#{question.id}/answers",
+             params: { format: :json, access_token: '1234' }
 
         expect(response.status).to eq 401
       end
@@ -142,6 +137,12 @@ describe 'answers API' do
       let(:access_token) { create(:access_token, resource_owner_id: user.id) }
 
       context 'with valid attributes' do
+        it 'returns 200 status' do
+          answer_create(:answer, question)
+
+          expect(response).to be_successful
+        end
+
         it 'saves the new answer in the database' do
           expect { answer_create(:answer, question) }.to change(Answer, :count).by(1)
         end
@@ -159,14 +160,12 @@ describe 'answers API' do
     end
 
     def answer_create(attribute, question)
-      post "/api/v1/questions/#{question.id}/answers",
-           params: { question_id: question,
-                     answer: attributes_for(attribute),
-                     format: :json,
-                     access_token: access_token.token
-                   }
+      post "/api/v1/questions/#{question.id}/answers", params: { question_id: question,
+                                                                 answer: attributes_for(attribute),
+                                                                 format: :json,
+                                                                 access_token: access_token.token
+                                                               }
     end
-
   end
 
 end

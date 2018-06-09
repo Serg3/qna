@@ -3,7 +3,6 @@ require 'rails_helper'
 describe 'questions API' do
 
   describe 'GET #index' do
-
     context 'unauthorized' do
       it 'returns 401 status if there is no access_token' do
         get '/api/v1/questions/', params: { format: :json }
@@ -24,9 +23,10 @@ describe 'questions API' do
       let(:question) { questions.first }
       let(:access_token) { create(:access_token, resource_owner_id: user.id) }
 
-      before { get '/api/v1/questions/', params: { format: :json,
-                                                   access_token: access_token.token
-                                                   } }
+      before do
+        get '/api/v1/questions/',
+        params: { format: :json, access_token: access_token.token }
+      end
 
       it 'returns 200 status' do
         expect(response).to be_successful
@@ -44,11 +44,9 @@ describe 'questions API' do
         end
       end
     end
-
   end
 
   describe 'GET #show' do
-
     context 'unauthorized' do
       let(:user) { create(:user) }
       let(:question) { create :question, user: user }
@@ -80,9 +78,10 @@ describe 'questions API' do
 
       let(:access_token) { create(:access_token, resource_owner_id: user.id) }
 
-      before { get "/api/v1/questions/#{question.id}", params: { format: :json,
-                                                                 access_token: access_token.token
-                                                                 } }
+      before do
+        get "/api/v1/questions/#{question.id}",
+        params: { format: :json, access_token: access_token.token }
+      end
 
       it 'returns 200 status' do
         expect(response).to be_successful
@@ -114,11 +113,9 @@ describe 'questions API' do
         end
       end
     end
-
   end
 
   describe 'POST #create' do
-
     context 'unauthorized' do
       it 'returns 401 status if there is no access_token' do
         post "/api/v1/questions", params: { format: :json }
@@ -136,6 +133,12 @@ describe 'questions API' do
     context 'authorized' do
       let(:user) { create(:user) }
       let(:access_token) { create(:access_token, resource_owner_id: user.id) }
+
+      it 'returns 200 status' do
+        question_create(:question)
+
+        expect(response).to be_successful
+      end
 
       context 'with valid attributes' do
         it 'saves the new question in the database' do
@@ -160,7 +163,6 @@ describe 'questions API' do
                                           access_token: access_token.token
                                         }
     end
-
   end
 
 end

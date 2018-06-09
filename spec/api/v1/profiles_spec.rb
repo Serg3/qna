@@ -3,7 +3,6 @@ require 'rails_helper'
 describe 'Profile API' do
 
   describe 'GET #me' do
-
     context 'unauthorized' do
       it 'returns 401 status if there is no access_token' do
         get '/api/v1/profiles/me', params: { format: :json }
@@ -22,9 +21,10 @@ describe 'Profile API' do
       let(:me) { create(:user) }
       let(:access_token) { create(:access_token, resource_owner_id: me.id) }
 
-      before { get '/api/v1/profiles/me', params: { format: :json,
-                                                    access_token: access_token.token
-                                                    } }
+      before do
+        get '/api/v1/profiles/me',
+        params: { format: :json, access_token: access_token.token }
+      end
 
       it 'returns 200 status' do
         expect(response).to be_successful
@@ -42,11 +42,9 @@ describe 'Profile API' do
         end
       end
     end
-
   end
 
   describe 'GET #index' do
-
     context 'unauthorized' do
       it 'returns 401 status if there is no access_token' do
         get '/api/v1/profiles/', params: { format: :json }
@@ -66,9 +64,10 @@ describe 'Profile API' do
       let!(:users) { create_list(:user, 3) }
       let(:access_token) { create(:access_token, resource_owner_id: me.id) }
 
-      before { get '/api/v1/profiles/', params: { format: :json,
-                                                  access_token: access_token.token
-                                                  } }
+      before do
+        get '/api/v1/profiles/',
+        params: { format: :json, access_token: access_token.token }
+      end
 
       it 'returns 200 status' do
         expect(response).to be_successful
@@ -82,7 +81,6 @@ describe 'Profile API' do
         expect(response.body).to_not include_json(me.to_json)
       end
     end
-
   end
 
 end
