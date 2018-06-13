@@ -1,6 +1,7 @@
 class Question < ApplicationRecord
   include Ratingable
   include Commentable
+  include Subscribable
 
   belongs_to :user
   has_many :answers, dependent: :destroy

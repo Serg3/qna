@@ -10,6 +10,8 @@ class Answer < ApplicationRecord
 
   accepts_nested_attributes_for :attachments, reject_if: :all_blank, allow_destroy: true
 
+  after_commit :subscribers_notification, on: :create
+
   scope :by_best, -> { order(best: :desc, created_at: :desc) }
 
   def set_best
@@ -19,5 +21,9 @@ class Answer < ApplicationRecord
       current_best.update!(best: false) if current_best
       update!(best: true)
     end
+  end
+
+  def subscribers_notification
+    AnswerNotificationJob.perform_later(self)
   end
 end

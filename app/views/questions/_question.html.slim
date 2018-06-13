@@ -31,6 +31,16 @@ div class="question_#{question.id}"
 
         = f.submit 'Save'
 
+  - if can?(:create, Subscription)
+    - if question.subscribed?(current_user)
+      = link_to 'Unsubscribe',
+                subscription_path(question.subscribed?(current_user)),
+                method: :delete
+    - else
+      = link_to 'Subscribe',
+                question_subscriptions_path(question),
+                method: :post
+
   h4 Comments:
   div class="comment_question_#{question.id}"
     p

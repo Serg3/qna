@@ -79,5 +79,10 @@ RSpec.describe Ability, type: :model do
     context 'User' do
       it { should be_able_to [:read, :me], User }
     end
+
+    context 'Subscriptions' do
+      it { should be_able_to :create, Subscription }
+      it { should be_able_to :destroy, Subscription }
+    end
   end
 end

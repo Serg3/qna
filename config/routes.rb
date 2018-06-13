@@ -18,7 +18,7 @@ Rails.application.routes.draw do
       post :cancel
     end
   end
-  
+
   concern :commentable do
     resources :comments, only: :create, shallow: true
   end
@@ -32,6 +32,8 @@ Rails.application.routes.draw do
         put :set_best
       end
     end
+
+    resources :subscriptions, only: [:create, :destroy], shallow: true
   end
 
   resources :attachments, only: :destroy
