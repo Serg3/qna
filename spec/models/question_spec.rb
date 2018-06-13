@@ -10,5 +10,10 @@ RSpec.describe Question, type: :model do
 
   it { should accept_nested_attributes_for :attachments }
 
+  let(:user) { create(:user) }
+  let(:other_user) { create(:user) }
+  let(:resource) { create(:question, user: user) }
+
   it_behaves_like 'ratingable'
+  it_behaves_like 'subscribable'
 end

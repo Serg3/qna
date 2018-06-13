@@ -2,6 +2,7 @@ require 'rails_helper'
 
 shared_examples_for 'rated' do
   sign_in_user
+  
   let(:user2) { create(:user) }
 
   describe 'POST #like' do
