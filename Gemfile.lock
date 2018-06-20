@@ -361,7 +361,7 @@ GEM
     turbolinks-source (5.1.0)
     tzinfo (1.2.5)
       thread_safe (~> 0.1)
-    uglifier (4.1.11)
+    uglifier (3.0.4)
       execjs (>= 0.3.0, < 3)
     warden (1.2.7)
       rack (>= 1.0)
@@ -434,7 +434,7 @@ DEPENDENCIES
   thinking-sphinx
   turbolinks (~> 5)
   tzinfo-data
-  uglifier
+  uglifier (~> 3.0.4)
   web-console (>= 3.3.0)
   whenever
 
@@ -442,4 +442,4 @@ RUBY VERSION
    ruby 2.4.2p198
 
 BUNDLED WITH
-   1.16.1
+   1.16.2
