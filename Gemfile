@@ -59,6 +59,8 @@ gem 'mysql2'
 gem 'thinking-sphinx'
 gem 'dotenv-rails'
 gem 'therubyracer'
+gem 'thin'
+gem 'private_pub'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
