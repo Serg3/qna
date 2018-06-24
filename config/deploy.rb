@@ -47,5 +47,10 @@ append :linked_dirs, "log",
 # set :ssh_options, verify_host_key: :secure
 
 namespace :deploy do
+  desc 'Restart application'
+  task :restart do
+    invoke 'unicorn:restart'
+  end
+
   after :publishing, :restart
 end
