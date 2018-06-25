@@ -2,7 +2,8 @@ div class="answer_#{answer.id}"
   div -------------------------------------------------------------------------------
   p
     - if can?(:set_best, answer) && !answer.best?
-      = answer.body
+      - cache answer do
+        = answer.body
       div = link_to 'The best', set_best_answer_path(answer), method: :put, remote: true
     - else
       = answer.body
@@ -26,13 +27,14 @@ div class="answer_#{answer.id}"
 
     ul
       - answer.attachments.each do |a|
-        li id="attachment_#{a.id}"
-          => link_to a.file.identifier, a.file.url
-          - if can?(:destroy, a)
-            = link_to 'Remove file',
-                      attachment_path(a),
-                      method: :delete,
-                      data: { confirm: 'are you sure?', remote: true }
+        - cache attachment do
+          li id="attachment_#{a.id}"
+            => link_to a.file.identifier, a.file.url
+        - if can?(:destroy, a)
+          = link_to 'Remove file',
+                    attachment_path(a),
+                    method: :delete,
+                    data: { confirm: 'are you sure?', remote: true }
 
     div class="comment_answer_#{answer.id}"
         p

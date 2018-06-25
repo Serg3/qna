@@ -1,20 +1,22 @@
 div class="question_#{question.id}"
-  p
-    h2 = question.title
-  p
-    h3 = question.body
+  - cache question do
+    p
+      h2 = question.title
+    p
+      h3 = question.body
   p
     = render 'shared/rating', resource: question
   h4 Attachments:
   ul
     - question.attachments.each do |a|
-      li id="attachment_#{a.id}"
-        => link_to a.file.identifier, a.file.url
-        - if can?(:destroy, a)
-          = link_to 'Remove file',
-                    attachment_path(a),
-                    method: :delete,
-                    data: { confirm: 'are you sure?', remote: true }
+      - cache attachment do
+        li id="attachment_#{a.id}"
+          => link_to a.file.identifier, a.file.url
+      - if can?(:destroy, a)
+        = link_to 'Remove file',
+                  attachment_path(a),
+                  method: :delete,
+                  data: { confirm: 'are you sure?', remote: true }
 
   - if can?(:update, question)
     p = link_to 'Edit question', '', class: 'edit-question-link', data: { question_id: question.id }
